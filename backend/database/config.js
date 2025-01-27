@@ -1,12 +1,17 @@
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const connectToDB = async () => {
-    try {
-        await mongoose.connect("mongodb+srv://sakethsampath2006:kQSBM1QNe8mBxzOo@cluster0.780eh.mongodb.net/")
-        console.log("Connected to MongoDB Successfully");
-    } catch(error) {
-        console.log("Failed to connect to MongoDB: ", error)
-    }
-}
+  try {
+    await mongoose.connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB Successfully");
+  } catch (error) {
+    console.log("Failed to connect to MongoDB: ", error);
+  }
+};
 
 export default connectToDB;

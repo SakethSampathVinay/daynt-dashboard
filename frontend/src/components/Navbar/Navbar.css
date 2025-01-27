@@ -1,0 +1,55 @@
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  color: white;
+  width: 98%;
+  height: 60px;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.navbar-card-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.heading {
+  font-family: "Roboto";
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #5f6fff;
+}
+
+.paragraph {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 15px;
+  border: 1px solid grey;
+  color: grey;
+  border-radius: 20px;
+  padding: 4px 8px;
+}
+
+.button {
+  background-color: #5f6fff;
+  color: white;
+  font-family: "Roboto";
+  font-size: 16px;
+  border: none;
+  padding: 10px 16px 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #4c56ff;
+}

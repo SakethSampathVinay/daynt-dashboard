@@ -1,41 +1,71 @@
 import React, { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
+import { AuthContext } from "./context/context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddUser from "./components/AddItem/AddItem";
+import Dashboard from "./components/Dashboard/Dashboard";
 
-// import Navbar from "./components/Navbar";
-// import Footer from "./components/Footer";
+const ProtectedRoute = ({ children }) => {
+  const { token } = useContext(AuthContext);
+  return token ? children : <Navigate to="/login" replace />;
+};
 
-// import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-// import Profile from "./pages/Profile";
-// import Contact from "./pages/Contact";
-
-import { AuthContext } from "./context/context.jsx";
-
-function App() {
+const App = () => {
   const { token } = useContext(AuthContext);
 
-  return (
-    <div className="container">
-      <ToastContainer />
-      {/* <Navbar /> */}
-      <Routes>
-        {/* Public Routes */}
-        {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
+  if (!token) {
+    // If no token, render only the Login component
+    return (
+      <>
+        <ToastContainer />
+        <Login />
+      </>
+    );
+  }
 
-        {/* Protected Routes */}
-        <Route path="/dashboard" element={token ? <Dashboard /> : <Login />} />
-        {/* <Route path="/profile" element={token ? <Profile /> : <Login />} /> */}
-      </Routes>
-      {/* <Footer /> */}
+  return (
+    <div className="app-container">
+      <ToastContainer />
+      <Navbar />
+      <div className="main-layout">
+        <Sidebar />
+        <div className="content">
+          <Routes>
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add-person"
+              element={
+                <ProtectedRoute>
+                  <AddUser />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
